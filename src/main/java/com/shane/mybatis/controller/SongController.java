@@ -3,6 +3,7 @@ package com.shane.mybatis.controller;
 import com.shane.mybatis.entity.Song;
 import com.shane.mybatis.service.SongService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,6 +14,9 @@ public class SongController {
 
     @Autowired
     private SongService songService;
+
+    @Autowired
+    private RedisTemplate<String, Object> redisTemplate;
 
     @GetMapping("")
     public List<Song> selectSong(@RequestParam(value = "singerId", required = false) Integer singerId,

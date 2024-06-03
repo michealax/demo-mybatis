@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -29,9 +30,21 @@ public class SingerServiceImpl implements SingerService {
         if (pageNum < 0 || limitNum <= 0) {
             return new ArrayList<>();
         }
-
+        String key = "singer:%d:%d";
+        List<Singer> singers = redisTemplate.opsForList().range(String.format(key, pageNum, limitNum), 0L,-1L);
+        if(singers != null && singers.size() > 0){
+            System.out.println("singers from cached");
+            return singers;
+        }
         long start = (pageNum - 1) * limitNum;
-        return singerRepository.selectAllSingers(start, limitNum);
+        singers = singerRepository.selectAllSingers(start, limitNum);
+        if (singers == null || singers.isEmpty()){
+            singers = new ArrayList<>();
+            singers.add(new Singer());
+        }
+        redisTemplate.opsForList().rightPushAll(String.format(key, pageNum, limitNum),singers);
+        redisTemplate.expire(String.format(key, pageNum, limitNum),10,TimeUnit.SECONDS);
+        return singers;
     }
 
     @Override
