@@ -79,6 +79,12 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>com.shane</groupId>
+            <artifactId>shane-starter-log</artifactId>
+            <version>0.0.1</version>
+        </dependency>
     </dependencies>
 
 
