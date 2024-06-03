@@ -1,20 +1,30 @@
 package com.shane.mybatis.service.impl;
 
-import com.github.pagehelper.PageHelper;
+import com.alibaba.fastjson2.JSON;
+import com.shane.mybatis.constants.RedisKeyConst;
 import com.shane.mybatis.entity.Song;
 import com.shane.mybatis.repository.SongRepository;
 import com.shane.mybatis.service.SongService;
+import io.lettuce.core.RedisClient;
+import io.lettuce.core.api.StatefulRedisConnection;
+import io.lettuce.core.api.sync.RedisCommands;
+import io.lettuce.core.codec.RedisCodec;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 @Service
 
 public class SongServiceImpl implements SongService {
     @Autowired
     private SongRepository songRepository;
+
+    @Resource
+    private RedisTemplate<String, Object> redisTemplate;
 
     @Override
     public List<Song> selectSong(Integer singerId, String name) {
@@ -34,5 +44,24 @@ public class SongServiceImpl implements SongService {
     @Override
     public List<Song> selectBySingerIds(List<Integer> ids) {
         return songRepository.selectBySingerIds(ids);
+    }
+
+    @Override
+    public Song selectSongById(Integer id) {
+
+            String key = RedisKeyConst.SongKey.SONG_KEY;
+            Song song = (Song) redisTemplate.opsForValue().get(String.format(key, id));
+            if (song != null) {
+                System.out.println("song from cache - redis");
+                return song;
+            }
+
+            song = songRepository.selectSongById(id);
+            if (song == null) {
+                song = new Song();
+            }
+
+            redisTemplate.opsForValue().set(String.format(key, song.getId()), song, 30, TimeUnit.SECONDS);
+            return song;
     }
 }

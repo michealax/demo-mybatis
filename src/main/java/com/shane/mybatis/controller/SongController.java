@@ -39,4 +39,9 @@ public class SongController {
 
         return songService.selectBySingerIds(ids);
     }
+
+    @GetMapping("/{id}")
+    public Song getSong(@PathVariable Integer id){
+        return songService.selectSongById(id);
+    }
 }

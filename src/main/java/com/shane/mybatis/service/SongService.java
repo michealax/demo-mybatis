@@ -14,4 +14,6 @@ public interface SongService {
     List<Song> selectSongByOneLabel(Integer singerId, String name);
 
     List<Song> selectBySingerIds(List<Integer> ids);
+
+    Song selectSongById(Integer id);
 }

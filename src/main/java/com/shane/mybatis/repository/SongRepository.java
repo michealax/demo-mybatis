@@ -18,4 +18,6 @@ public interface SongRepository {
                                 @Param("name") String name);
 
     List<Song> selectBySingerIds(@Param("list") List<Integer> singerIds);
+
+    Song selectSongById(Integer id);
 }

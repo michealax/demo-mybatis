@@ -53,6 +53,10 @@
         </foreach>
     </select>
 
+    <select id="selectSongById" resultMap="songResultMap">
+        select * from song where id = #{id}
+    </select>
+
 
     <resultMap id="songResultMap" type="com.shane.mybatis.entity.Song">
         <result property="singerId" column="singer_id"></result>

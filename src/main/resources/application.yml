@@ -9,10 +9,17 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
   redis:
     database: 0
-    host: 192.168.31.49
+#    host: 192.168.31.49
+    host: 106.14.216.125
     port: 6379
-    password: 123456
-    jedis:
+#    password: 123456
+#    jedis:
+#      pool:
+#        min-idle: 0
+#        max-active: 8
+#        max-idle: 8
+#        max-wait: -1ms
+    lettuce:
       pool:
         min-idle: 0
         max-active: 8
