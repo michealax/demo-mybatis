@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shane.mybatis.repository.SingerRepository">
+    <select id="selectAllSingers" resultType="com.shane.mybatis.entity.Singer">
+        select *
+        from singer limit #{start}, #{limit}
+    </select>
+    <select id="selectSingerList" resultType="com.shane.mybatis.entity.Singer">
+        select *
+        from singer
+    </select>
+    <select id="getSingerById" resultMap="singerResultMap">
+        select singer.id,singer.name,singer.sex,singer.pic,singer.birth,singer.location,singer.introduction,
+               s.id sid, s.name sname, s.create_time sctime, s.update_time sutime
+        from singer
+        left join song s on singer.id = s.singer_id
+        where singer.id = #{id}
+    </select>
+
+    <resultMap id="singerResultMap" type="com.shane.mybatis.entity.Singer">
+        <id property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="sex" column="sex"/>
+        <result property="pic" column="pic"/>
+        <result property="birth" column="birth"/>
+        <result property="location" column="location"/>
+        <result property="introduction" column="introduction"/>
+        <collection property="songs"  ofType="com.shane.mybatis.entity.Song">
+            <id property="id" column="sid"/>
+            <result property="name" column="sname"/>
+            <result property="createTime" column="sctime"/>
+            <result property="updateTime" column="sutime"/>
+        </collection>
+    </resultMap>
+
+    <resultMap id="songResultMap" type="com.shane.mybatis.entity.Song">
+        <id property="id" column="s.id"/>
+        <result property="singerId" column="singer_id"/>
+        <result property="name" column="s.name"/>
+        <result property="introduction" column="s.introduction"/>
+        <result property="pic" column="s.pic"/>
+        <result property="lyric" column="s.lyric"/>
+        <result property="url" column="s.url"/>
+        <result property="createTime" column="s.create_time"/>
+        <result property="updateTime" column="s.update_time"/>
+    </resultMap>
+</mapper>

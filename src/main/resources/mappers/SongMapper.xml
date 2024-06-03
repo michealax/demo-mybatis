@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.shane.mybatis.repository.SongRepository">
+    <update id="updateSong">
+        update song
+        <set>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="introduction != null">
+                introduction = #{introduction}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+    <select id="selectSong" resultMap="songResultMap">
+        select *
+        from song
+        # 当返回有值时才会添加where，并且前缀为and或or时会替换为where
+        <trim prefix="WHERE" prefixOverrides="AND |OR">
+            <if test="singerId != null">
+                singer_id = #{singerId}
+            </if>
+            <if test="name != null and name.length > 0">
+                and name like concat(concat('%', #{name}),'%')
+            </if>
+        </trim>
+    </select>
+    <select id="selectByOneLabel" resultMap="songResultMap">
+        select * from song
+        where
+        <choose>
+            <when test="singerId != null">
+                singer_id = #{singerId}
+            </when>
+
+            <when test="name != null and name.length > 0">
+                <bind name="pattern" value="'%'+name+'%'"/>
+                name like #{pattern}
+            </when>
+            <otherwise>
+                id = 1
+            </otherwise>
+        </choose>
+    </select>
+    <select id="selectBySingerIds" resultMap="songResultMap">
+        select *
+        from song
+        where singer_id in
+        <foreach collection="list" index="index" item="item" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </select>
+
+
+    <resultMap id="songResultMap" type="com.shane.mybatis.entity.Song">
+        <result property="singerId" column="singer_id"></result>
+        <result property="createTime" column="create_time"></result>
+        <result property="updateTime" column="update_time"></result>
+    </resultMap>
+</mapper>
