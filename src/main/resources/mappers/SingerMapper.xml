@@ -12,7 +12,7 @@
     </select>
     <select id="getSingerById" resultMap="singerResultMap">
         select singer.id,singer.name,singer.sex,singer.pic,singer.birth,singer.location,singer.introduction,
-               s.id sid, s.name sname, s.create_time sctime, s.update_time sutime
+               s.id sid, s.name sname, s.create_time sctime, s.update_time sutime, s.pic spic,s.lyric,s.url surl,s.introduction sinfo
         from singer
         left join song s on singer.id = s.singer_id
         where singer.id = #{id}
@@ -31,6 +31,11 @@
             <result property="name" column="sname"/>
             <result property="createTime" column="sctime"/>
             <result property="updateTime" column="sutime"/>
+            <result property="singerId" column="id"/>
+            <result property="introduction" column="sinfo"/>
+            <result property="pic" column="spic"/>
+            <result property="lyric" column="lyric"/>
+            <result property="url" column="surl"/>
         </collection>
     </resultMap>
 
