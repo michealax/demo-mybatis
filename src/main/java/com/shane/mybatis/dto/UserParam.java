@@ -20,7 +20,7 @@ import java.io.Serializable;
 public class UserParam implements Serializable {
     public static final long serialVersionUID = 1L;
 
-    @NotEmpty(message = "could not be empty", groups = {EditValidationGroup.class})
+    @NotEmpty(message = "{user.msg.userId.notEmpty}", groups = {EditValidationGroup.class})
     private String userId;
 
     @NotEmpty(message = "could not be empty")

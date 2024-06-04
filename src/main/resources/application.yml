@@ -26,6 +26,8 @@ spring:
         max-idle: 8
         max-wait: -1ms
     connect-timeout: 30000ms
+  messages:
+    basename: messages/validation
 
 
 mybatis:
