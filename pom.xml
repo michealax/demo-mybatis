@@ -132,4 +132,10 @@
         </plugins>
     </build>
 
+    <repositories>
+        <repository>
+            <id>my-mvn-repo</id>
+            <url>https://github.com/michealax/my-mvn-repo/tree/master/</url>
+        </repository>
+    </repositories>
 </project>
