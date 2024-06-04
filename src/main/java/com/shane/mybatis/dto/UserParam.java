@@ -1,6 +1,7 @@
 package com.shane.mybatis.dto;
 
 import com.shane.mybatis.common.group.EditValidationGroup;
+import com.shane.mybatis.common.validation.CardNumber;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -27,7 +28,7 @@ public class UserParam implements Serializable {
     private String email;
 
     @NotEmpty(message = "could not be empty")
-    @Pattern(regexp = "^(\\d{6})(\\d{4})(\\d{2})(\\d{2})(\\d{3})([0-9]|X)$")
+    @CardNumber
     private String cardNo;
 
     @NotEmpty(message = "could not be empty")

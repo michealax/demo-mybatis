@@ -14,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import javax.validation.groups.Default;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,14 +32,14 @@ public class UserController {
     }
 
     @PostMapping("/")
-    public ResponseResult<Object> add(@Validated(AddValidationGroup.class) @RequestBody UserParam request, BindingResult bindingResult) {
+    public ResponseResult<Object> add(@Valid @RequestBody UserParam request, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             List<ObjectError> errors = bindingResult.getAllErrors();
             List<String> errorList = new ArrayList<>();
             String fs = "Invalid Parameter : object - {%s}, field - {%s}, errorMessage - {%s}";
             errors.forEach(p -> {
                 FieldError fieldError = (FieldError) p;
-                errorList.add(String.format(fs,fieldError.getObjectName(), fieldError.getField(), fieldError.getDefaultMessage()));
+                errorList.add(String.format(fs, fieldError.getObjectName(), fieldError.getField(), fieldError.getDefaultMessage()));
 
                 log.error("Invalid Parameter : object - {}, field - {}, errorMessage - {}",
                         fieldError.getObjectName(), fieldError.getField(), fieldError.getDefaultMessage());
@@ -50,14 +51,14 @@ public class UserController {
     }
 
     @PutMapping("/")
-    public ResponseResult<Object> edit(@Validated(EditValidationGroup.class) @RequestBody UserParam request, BindingResult bindingResult) {
+    public ResponseResult<Object> edit(@Validated({Default.class, EditValidationGroup.class}) @RequestBody UserParam request, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             List<ObjectError> errors = bindingResult.getAllErrors();
             List<String> errorList = new ArrayList<>();
             String fs = "Invalid Parameter : object - {%s}, field - {%s}, errorMessage - {%s}";
             errors.forEach(p -> {
                 FieldError fieldError = (FieldError) p;
-                errorList.add(String.format(fs,fieldError.getObjectName(), fieldError.getField(), fieldError.getDefaultMessage()));
+                errorList.add(String.format(fs, fieldError.getObjectName(), fieldError.getField(), fieldError.getDefaultMessage()));
 
                 log.error("Invalid Parameter : object - {}, field - {}, errorMessage - {}",
                         fieldError.getObjectName(), fieldError.getField(), fieldError.getDefaultMessage());
