@@ -1,7 +1,9 @@
 package com.shane.mybatis.config;
 
 import com.shane.mybatis.common.i18n.CustomLocalChangeInterceptor;
+import com.shane.mybatis.common.version.ApiVersionRequestMappingHandlerMapping;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.web.servlet.WebMvcRegistrations;
 import org.springframework.boot.validation.MessageInterpolatorFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,12 +14,13 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping;
 
 import java.util.Locale;
 
 @Configuration
 @RequiredArgsConstructor
-public class WebConfig implements WebMvcConfigurer {
+public class WebConfig implements WebMvcConfigurer, WebMvcRegistrations {
     private static final String LANGUAGE_PARAM_NAME = LocaleChangeInterceptor.DEFAULT_PARAM_NAME;
 
     private final ResourceBundleMessageSource resourceBundleMessageSource;
@@ -48,5 +51,10 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor());
+    }
+
+    @Override
+    public RequestMappingHandlerMapping getRequestMappingHandlerMapping() {
+        return new ApiVersionRequestMappingHandlerMapping();
     }
 }
