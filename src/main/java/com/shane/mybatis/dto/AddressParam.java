@@ -1,5 +1,6 @@
 package com.shane.mybatis.dto;
 
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -12,6 +13,7 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ApiModel(value = "address")
 public class AddressParam implements Serializable {
     public static final long serialVersionUID = 1L;
 

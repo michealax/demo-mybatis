@@ -3,12 +3,17 @@ package com.shane.mybatis.controller;
 import com.shane.mybatis.dto.ResponseResult;
 import com.shane.mybatis.entity.Song;
 import com.shane.mybatis.service.SongService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Api
 @RestController
 @RequestMapping("/song")
 public class SongController {
@@ -23,7 +28,12 @@ public class SongController {
         return ResponseResult.success(songs);
     }
 
+    @ApiOperation("update a song")
     @PostMapping("/{id}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "song", type = "body", dataTypeClass = Song.class, required = true),
+            @ApiImplicitParam(name = "id", type = "path", dataTypeClass = Integer.class, required = true)
+    })
     public ResponseResult<Integer> update(@RequestBody Song song, @PathVariable("id") int id) {
         song.setId(id);
         int response = songService.updateSong(song);
@@ -32,7 +42,7 @@ public class SongController {
 
     @GetMapping("/one")
     public ResponseResult<List<Song>> selectSongByOneLabel(@RequestParam(value = "singerId", required = false) Integer singerId,
-                                           @RequestParam(value = "name", required = false) String name) {
+                                                           @RequestParam(value = "name", required = false) String name) {
 
         List<Song> songs = songService.selectSongByOneLabel(singerId, name);
         return ResponseResult.success(songs);
@@ -40,7 +50,7 @@ public class SongController {
 
     @GetMapping("/ids")
     public ResponseResult<List<Song>> selectSongBySingerIds(@RequestBody List<Integer> ids) {
-        List<Song> songs =songService.selectBySingerIds(ids);
+        List<Song> songs = songService.selectBySingerIds(ids);
         return ResponseResult.success(songs);
     }
 

@@ -28,6 +28,9 @@ spring:
     connect-timeout: 30000ms
   messages:
     basename: messages/validation
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
 
 mybatis:

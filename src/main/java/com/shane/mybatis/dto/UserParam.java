@@ -2,6 +2,7 @@ package com.shane.mybatis.dto;
 
 import com.shane.mybatis.common.group.EditValidationGroup;
 import com.shane.mybatis.common.validation.CardNumber;
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,6 +18,7 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@ApiModel(value = "UserParam", subTypes = {AddressParam.class})
 public class UserParam implements Serializable {
     public static final long serialVersionUID = 1L;
 
