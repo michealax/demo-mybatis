@@ -4,10 +4,9 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 
-@FeignClient(value = "payment")
+@FeignClient(value = "${app.feign.client.payment.name}")
 public interface SSoClient {
 
-    //    @GetMapping("${feign.client.config.sso-server[0]}")
-    @GetMapping("/payment/hello")
+    @GetMapping("${app.feign.client.payment.urls[0]}")
     ResponseEntity<String> hello();
 }

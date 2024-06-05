@@ -56,6 +56,14 @@ feign:
       payment:
         read-timeout: 30000
 
+app:
+  feign:
+    client:
+      payment:
+        name: payment
+        urls:
+          - /payment/hello
+
 
 #  configuration:
 #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
