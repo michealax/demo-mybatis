@@ -16,13 +16,19 @@ public class UserServiceImpl implements UserService {
     private SSoClient sSoClient;
 
     @Override
-    public String getSso() {
+    public String hello() {
         ResponseEntity<String> res = sSoClient.hello();
-        if (!HttpStatus.OK.equals(res.getStatusCode())) {
-            throw new RuntimeException("Sso client error");
-        }
+//        if (!HttpStatus.OK.equals(res.getStatusCode())) {
+//            throw new RuntimeException("Sso client error");
+//        }
         return res.getBody();
     }
+
+    @Override
+    public String error() {
+        return sSoClient.error().getBody();
+    }
+
 
     @Override
     @RedisLock("updateUser")

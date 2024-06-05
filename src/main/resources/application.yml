@@ -55,6 +55,9 @@ feign:
     config:
       payment:
         read-timeout: 30000
+  circuitbreaker:
+    enabled: true
+
 
 app:
   feign:
@@ -63,6 +66,7 @@ app:
         name: payment
         urls:
           - /payment/hello
+          - /payment/error
 
 
 #  configuration:

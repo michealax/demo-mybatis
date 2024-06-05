@@ -102,9 +102,15 @@ public class UserController {
         return ResponseResult.success(user);
     }
 
-    @ApiOperation("get sso")
-    @GetMapping("sso")
-    public ResponseResult<String> sso() {
-        return ResponseResult.success(userService.getSso());
+    @ApiOperation("get hello")
+    @GetMapping("hello")
+    public ResponseResult<String> hello() {
+        return ResponseResult.success(userService.hello());
+    }
+
+    @ApiOperation("get error")
+    @GetMapping("error")
+    public ResponseResult<String> error() {
+        return ResponseResult.success(userService.error());
     }
 }
