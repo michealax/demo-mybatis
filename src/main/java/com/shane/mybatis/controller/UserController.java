@@ -101,4 +101,10 @@ public class UserController {
                 .build();
         return ResponseResult.success(user);
     }
+
+    @ApiOperation("get sso")
+    @GetMapping("sso")
+    public ResponseResult<String> sso() {
+        return ResponseResult.success(userService.getSso());
+    }
 }
