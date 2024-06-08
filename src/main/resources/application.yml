@@ -9,6 +9,20 @@ spring:
     username: root
     password: mysql2023
     driver-class-name: com.mysql.cj.jdbc.Driver
+#    hikari:
+#      pool-name: Shane-Hikari
+#      minimum-idle: 5
+#      idle-timeout: 600000
+#      maximum-pool-size: 10
+#      auto-commit: true
+#      max-lifetime: 1800000
+#      connection-timeout: 30000
+#      connection-test-query: SELECT 1
+#    type: com.zaxxer.hikari.HikariDataSource
+
+
+
+
   redis:
     database: 0
     #    host: 192.168.31.49
