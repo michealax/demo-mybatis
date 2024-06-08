@@ -19,7 +19,7 @@ public class QuartzConfig {
 
     @Bean
     public Trigger printTimeTrigger() {
-        CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule("0/1 * * * * ?");
+        CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule("* * 1 * * ?");
         return TriggerBuilder.newTrigger()
                 .forJob(helloJobDetail())
                 .withIdentity("quartzTaskService")

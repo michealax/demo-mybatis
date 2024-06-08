@@ -8,12 +8,12 @@ import org.springframework.scheduling.annotation.Scheduled;
 @Slf4j
 public class CacheUpdater {
 
-    @Scheduled(fixedRate = 5000)
+    @Scheduled(fixedRate = 5000000)
     public void runScheduleFixedRate(){
         log.info("update cache in fixed rate");
     }
 
-    @Scheduled(cron = "0/5 * * * * *")
+    @Scheduled(cron = "* * 1 ? * *")
     public void runScheduleCron(){
         log.info("update cache every 5 seconds");
     }
