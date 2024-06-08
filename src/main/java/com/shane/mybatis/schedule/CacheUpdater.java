@@ -13,7 +13,7 @@ public class CacheUpdater {
         log.info("update cache in fixed rate");
     }
 
-    @Scheduled(cron = "* * 1 ? * *")
+    @Scheduled(cron = "* * 0 ? * *")
     public void runScheduleCron(){
         log.info("update cache every 5 seconds");
     }

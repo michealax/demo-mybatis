@@ -52,4 +52,26 @@ public class FileController {
             throw new RuntimeException(e);
         }
     }
+
+    @PostMapping("/upload/multi")
+    public ResponseResult<String> upload(@RequestParam("files") MultipartFile[] files){
+        try {
+            String uploadPath = "E:\\Documents\\server\\mybatis-demo";
+            File uploadDir = new File(uploadPath);
+            if (!uploadDir.exists()) {
+                uploadDir.mkdir();
+            }
+            log.info(uploadDir.getAbsolutePath());
+
+            for (MultipartFile file: files){
+                File localFile = new File(uploadPath + File.separator + file.getOriginalFilename());
+                file.transferTo(localFile);
+            }
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return ResponseResult.success("Upload file successfully");
+    }
 }
